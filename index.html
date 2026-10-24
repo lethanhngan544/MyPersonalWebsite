@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f0e8">
+  <meta name="description" content="Embedded software engineering and game programming portfolio.">
+  <title>Two Sides | Portfolio</title>
+  <style>
+    :root {
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      --human-bg: #f7f0d9;
+      --human-ink: #28212c;
+      --human-muted: #655c6c;
+      --human-hot: #ff4f91;
+      --human-blue: #00a9c4;
+      --furry-bg: #171321;
+      --furry-ink: #fff8ff;
+      --furry-muted: #c9bbd8;
+      --furry-accent: #d8ff3e;
+      --furry-hot: #fa5be1;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    img { display: block; max-width: 100%; }
+
+    .construction-banner {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-bottom: 3px solid var(--human-ink);
+      background: repeating-linear-gradient(135deg, var(--furry-accent) 0 18px, var(--human-ink) 18px 21px);
+      text-align: center;
+    }
+
+    .construction-banner span {
+      padding: 6px 14px;
+      border: 2px solid var(--human-ink);
+      background: var(--human-hot);
+      box-shadow: 4px 4px 0 var(--human-blue);
+      color: var(--human-ink);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+
+    .split-layout {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      min-height: 170svh;
+      overflow: hidden;
+    }
+
+    .side {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      display: flex;
+      min-width: 0;
+      min-height: 170svh;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(32px, 6vw, 88px);
+      padding-top: clamp(500px, 57vh, 560px);
+    }
+
+    .side::before {
+      position: absolute;
+      z-index: 0;
+      inset: -18% -12%;
+      background-size: 100% 100%;
+      content: "";
+      pointer-events: none;
+      transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.12);
+      will-change: transform;
+    }
+
+    .side > * { position: relative; z-index: 1; }
+
+    .side-human {
+      background-color: var(--human-bg);
+      color: var(--human-ink);
+    }
+
+    .side-human::before {
+      background-image: linear-gradient(132deg, transparent 28%, #ff4f9118 28.2% 36%, transparent 36.2%), linear-gradient(42deg, transparent 58%, #00a9c417 58.2% 66%, transparent 66.2%);
+    }
+
+    .side-furry {
+      background-color: var(--furry-bg);
+      color: var(--furry-ink);
+    }
+
+    .side-furry::before {
+      background-image: linear-gradient(145deg, transparent 30%, #d8ff3e12 30.2% 39%, transparent 39.2%), linear-gradient(48deg, transparent 62%, #fa5be11c 62.2% 71%, transparent 71.2%);
+    }
+
+    .side-heading {
+      max-width: 520px;
+      animation: rise-in 700ms cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    .side-furry .side-heading { animation-delay: 140ms; }
+    .side-name {
+      width: fit-content;
+      margin: 0 0 18px;
+      padding: 8px 13px;
+      border: 2px solid var(--human-ink);
+      background: var(--furry-accent);
+      box-shadow: 5px 5px 0 var(--human-hot);
+      color: var(--human-ink);
+      font-size: 16px;
+      font-weight: 700;
+      transform: rotate(-3deg);
+    }
+
+    .side-furry .side-name {
+      border-color: var(--furry-accent);
+      background: var(--furry-hot);
+      box-shadow: -5px 5px 0 var(--furry-accent);
+      color: var(--furry-bg);
+      transform: rotate(3deg);
+    }
+
+    h1, h2 {
+      max-width: 500px;
+      margin: 0;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: 0;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      text-shadow: 4px 4px 0 var(--human-hot);
+    }
+
+    .side-furry h2 { text-shadow: -4px 4px 0 var(--furry-hot); }
+
+    .side-description {
+      max-width: 350px;
+      margin: 22px 0 0;
+      padding: 15px 17px;
+      border: 2px dashed var(--human-blue);
+      background: #fff9e9;
+      box-shadow: 6px 6px 0 var(--human-hot);
+      color: var(--human-ink);
+      font-size: 15px;
+      line-height: 1.7;
+      transform: rotate(-1.3deg);
+    }
+
+    .side-furry .side-description {
+      border-color: var(--furry-accent);
+      background: #2b2039;
+      box-shadow: -6px 6px 0 var(--furry-hot);
+      color: var(--furry-muted);
+      transform: rotate(1.3deg);
+    }
+
+    .side-social {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 9px 12px;
+      border: 2px solid var(--human-ink);
+      background: var(--human-hot);
+      box-shadow: 4px 4px 0 var(--human-blue);
+      color: #201b26;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transform: rotate(2deg);
+      transition: translate 180ms ease, opacity 180ms ease;
+    }
+
+    .brand-icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      fill: currentColor;
+    }
+
+    .divider-contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .side-furry .side-social {
+      border-color: var(--furry-accent);
+      background: var(--furry-accent);
+      box-shadow: -4px 4px 0 var(--furry-hot);
+      color: var(--furry-bg);
+      transform: rotate(-2deg);
+    }
+    .side-social:hover { opacity: .82; translate: 0 -3px; }
+
+    .image-strip {
+      display: grid;
+      align-items: end;
+      gap: 12px;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .human-images, .furry-images {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
+      gap: 16px;
+    }
+
+    .image-strip img {
+      width: 100%;
+      height: auto;
+      border: 0;
+      outline: 4px solid #fff;
+      outline-offset: -4px;
+      border-radius: 2px;
+      box-shadow: 8px 9px 0 var(--human-blue);
+      object-fit: contain;
+      animation: photo-in 720ms cubic-bezier(.2, .7, .2, 1) both;
+      transition: translate 200ms ease, filter 200ms ease;
+    }
+
+    .human-images img:first-child { transform: rotate(-4deg) translateY(8px); animation-delay: 180ms; }
+    .human-images img:nth-child(2) { outline-color: var(--human-hot); box-shadow: -8px 9px 0 var(--human-hot); transform: rotate(3deg) translateY(-5px); animation-delay: 280ms; }
+    .human-images img:nth-child(3) { box-shadow: 8px -7px 0 var(--furry-accent); transform: rotate(-2deg) translateY(6px); animation-delay: 380ms; }
+    .human-images img:nth-child(4) { outline-color: var(--human-blue); box-shadow: -8px 9px 0 var(--human-hot); transform: rotate(4deg) translateY(-7px); animation-delay: 480ms; }
+    .furry-images img { outline-color: var(--furry-hot); box-shadow: 7px 8px 0 var(--furry-accent); }
+    .furry-images img:nth-child(odd) { transform: rotate(-4deg) translateY(9px); }
+    .furry-images img:nth-child(even) { outline-color: var(--furry-accent); box-shadow: -7px 8px 0 var(--furry-hot); transform: rotate(4deg) translateY(-5px); }
+    .furry-images img:nth-child(1) { animation-delay: 220ms; }
+    .furry-images img:nth-child(2) { animation-delay: 320ms; }
+    .furry-images img:nth-child(3) { animation-delay: 420ms; }
+    .furry-images img:nth-child(4) { animation-delay: 520ms; }
+    .image-strip img:hover { translate: 0 -5px; filter: saturate(1.08); }
+
+    .split-layout::after {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      border-left: 3px dashed var(--human-hot);
+      content: "";
+      pointer-events: none;
+      transform: rotate(1deg);
+    }
+
+    .divider-art {
+      position: absolute;
+      z-index: 2;
+      margin: 0;
+      top: 28px;
+      left: 50%;
+      width: clamp(220px, 23vw, 320px);
+      display: grid;
+      gap: 12px;
+      overflow: visible;
+      transform: translateX(-50%);
+      animation: rise-in 800ms cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    .divider-art img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+      border: 0;
+      outline: 5px dashed var(--human-hot);
+      outline-offset: -5px;
+      border-radius: 1px;
+      background: #fff;
+      box-shadow: 12px 13px 0 var(--furry-accent);
+      object-fit: contain;
+      transform: rotate(3deg);
+      animation: gentle-float 7s 800ms ease-in-out infinite;
+    }
+
+    .divider-contact {
+      display: flex;
+      width: fit-content;
+      max-width: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-inline: auto;
+      padding: 8px 13px;
+      border: 2px solid var(--human-ink);
+      border-radius: 1px;
+      background: var(--furry-accent);
+      color: var(--human-ink);
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 5px 5px 0 var(--human-hot);
+      transform: rotate(-2deg);
+      transition: translate 180ms ease;
+    }
+
+    .divider-contact a { font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .divider-contact:hover { translate: 0 -2px; }
+
+    .cursor-mark { display: none; }
+
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .cursor-mark {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 30px;
+        height: 30px;
+        color: var(--furry-accent);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate3d(var(--cursor-x, -48px), var(--cursor-y, -48px), 0) translate(-50%, -50%);
+        transition: opacity 140ms ease, scale 140ms ease;
+        mix-blend-mode: difference;
+      }
+
+      .cursor-mark.is-visible { opacity: 1; }
+      .cursor-mark.is-pressed { scale: .78; }
+      .cursor-mark span { position: absolute; width: 9px; height: 9px; border: 2px solid currentColor; }
+      .cursor-mark span:nth-child(1) { top: 0; left: 0; border-width: 2px 0 0 2px; }
+      .cursor-mark span:nth-child(2) { top: 0; right: 0; border-width: 2px 2px 0 0; }
+      .cursor-mark span:nth-child(3) { right: 0; bottom: 0; border-width: 0 2px 2px 0; }
+      .cursor-mark span:nth-child(4) { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+      .cursor-mark span:nth-child(5) { top: 13px; left: 13px; width: 4px; height: 4px; border: 0; background: currentColor; transform: rotate(45deg); }
+    }
+
+    @keyframes rise-in {
+      from { opacity: 0; translate: 0 12px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+
+    @keyframes photo-in {
+      from { opacity: 0; scale: .97; }
+      to { opacity: 1; scale: 1; }
+    }
+
+    @keyframes gentle-float {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -4px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+
+      .side::before { transform: none; will-change: auto; }
+    }
+
+    @media (max-width: 700px) {
+      .split-layout { min-height: auto; grid-template-columns: minmax(0, 1fr); overflow: visible; }
+      .split-layout::after { display: none; }
+      .side { min-height: 100svh; padding: 34px 26px; }
+      .side-human, .side-furry { padding-top: 34px; }
+      .side-human { grid-row: 2; }
+      .side-furry { grid-row: 3; }
+      h1, h2 { font-size: clamp(42px, 11vw, 62px); }
+      .divider-art {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 190px;
+        grid-row: 1;
+        margin: 0 auto;
+        gap: 10px;
+        transform: none;
+      }
+      .divider-art img { outline-width: 4px; outline-offset: -4px; }
+      .divider-contact { font-size: 11px; }
+      .human-images, .furry-images { gap: 12px; }
+    }
+
+    @media (max-width: 700px) {
+      .side::before { inset: -8% -16%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="construction-banner"><span>Website under construction</span></div>
+  <main class="split-layout">
+    <figure class="divider-art">
+      <img src="pics/two_sides.jpg" alt="Two sides: human and furry">
+      <figcaption class="divider-contact"><span>Common contact</span><a href="https://www.linkedin.com/in/gage200129" target="_blank" rel="noopener noreferrer"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>LinkedIn &#8599;</a><a href="https://steamcommunity.com/id/gagenotgay/" target="_blank" rel="noopener noreferrer"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="16.5" cy="7.5" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="7.5" r="1.4"/><circle cx="7" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m9.4 15.4 4.1-5.7M4.2 16.2l-2.5-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/></svg>Steam &#8599;</a></figcaption>
+    </figure>
+
+    <section class="side side-human" aria-labelledby="human-title">
+      <div class="side-heading">
+        <p class="side-name">Le Thanh Ngan <span>(GAGE)</span></p>
+        <h1 id="human-title">Embedded software engineer</h1>
+        <p class="side-description"> 
+            Vietnamese & some what fluent in English <br>
+            Hello my name is Le Thanh Ngan, but you can call me GAGE. 
+            I studied at HCMC University of Technology and Engineering,
+            focusing on embedded systems, firmware, and hardware.<br>
+            Full time goober.
+        </p>
+        <a class="side-social" href="https://www.facebook.com/OOFSTEV/" target="_blank" rel="noopener noreferrer"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.6 1.6-1.6h1.6V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7v3.1h2.9v8h3.5Z"/></svg>Human Facebook <span aria-hidden="true">&#8599;</span></a>
+      </div>
+      <div class="image-strip human-images" aria-label="Human-side images">
+        <img src="pics/human.jpg" alt="Human portrait for the embedded software engineering portfolio" width="132" height="156">
+        <img src="pics/human1.png" alt="Human-side portfolio image" width="132" height="156">
+        <img src="pics/human2.jpg" alt="Human-side portfolio image two" width="132" height="156">
+        <img src="pics/human3.jpg" alt="Human-side portfolio image three" width="132" height="156">
+      </div>
+    </section>
+
+    <section class="side side-furry" aria-labelledby="furry-title">
+      <div class="side-heading">
+        <p class="side-name">Theother GAGE</p>
+        <h2 id="furry-title">Game programmer &amp; furry creator(kinda)</h2>
+        <p class="side-description">
+            I'm the other side of GAGE. 
+            I work at Gameloft, where I focus on game programming, especially game engine development. 
+            I'm also interested in furry art.
+            <br>Thanks for visiting! Feel free to look around and explore my work. Although this website is still under construction, I hope you enjoy what you see. If you have any questions or would like to collaborate, please don't hesitate to reach out.
+        </p>
+        <a class="side-social" href="https://www.facebook.com/profile.php?id=61589964084460" target="_blank" rel="noopener noreferrer"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.6 1.6-1.6h1.6V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7v3.1h2.9v8h3.5Z"/></svg>Furry Facebook <span aria-hidden="true">&#8599;</span></a>
+      </div>
+      <div class="image-strip furry-images" aria-label="Furry-side images">
+        <img src="pics/furry1.JPG" alt="Furry-side image one" width="94" height="156">
+        <img src="pics/furry2.png" alt="Furry-side image two" width="94" height="156">
+        <img src="pics/furry3.png" alt="Furry-side image three" width="94" height="156">
+        <img src="pics/furry4.jpg" alt="Furry-side image four" width="94" height="156">
+      </div>
+    </section>
+
+  </main>
+  <div class="cursor-mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <script>
+    const pageSides = document.querySelectorAll(".side");
+    const cursorMark = document.querySelector(".cursor-mark");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reducedMotion) {
+      let scrollFrame = 0;
+      const updateParallax = () => {
+        const offset = `${Math.max(-150, window.scrollY * -0.12)}px`;
+        pageSides.forEach((side) => side.style.setProperty("--parallax-y", offset));
+        scrollFrame = 0;
+      };
+
+      window.addEventListener("scroll", () => {
+        if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateParallax);
+      }, { passive: true });
+      updateParallax();
+
+      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        let cursorFrame = 0;
+        let pointerX = 0;
+        let pointerY = 0;
+
+        window.addEventListener("pointermove", (event) => {
+          if (event.pointerType !== "mouse") return;
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+          if (cursorFrame) return;
+
+          cursorFrame = window.requestAnimationFrame(() => {
+            cursorMark.style.setProperty("--cursor-x", `${pointerX}px`);
+            cursorMark.style.setProperty("--cursor-y", `${pointerY}px`);
+            cursorMark.classList.add("is-visible");
+            cursorFrame = 0;
+          });
+        }, { passive: true });
+
+        window.addEventListener("pointerdown", () => cursorMark.classList.add("is-pressed"));
+        window.addEventListener("pointerup", () => cursorMark.classList.remove("is-pressed"));
+        window.addEventListener("blur", () => cursorMark.classList.remove("is-visible", "is-pressed"));
+        document.addEventListener("pointerout", (event) => {
+          if (!event.relatedTarget) cursorMark.classList.remove("is-visible", "is-pressed");
+        });
+      }
+    }
+  </script>
+</body>
+</html>
